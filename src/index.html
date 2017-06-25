@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Séries na Web!</title>
+    <script src="../lib/angular/angular.js"></script>
+    <link rel="stylesheet" type="text/css" href="../lib/bootstrap/bootstrap.css">
+    <script src="js/app.js"></script>
+    <script src="js/page-controller.js"></script>
+    <script src="js/imdb-service.js"></script>
+</head>
+
+<body>
+
+    <div ng-controller="MovieController">
+        
+        <div ng-show="error" ng-model="error">
+            
+            <div class="alert alert-danger" role="alert">
+                <strong>Deu ruim!</strong> Você não pode fazer isso... 
+            </div>
+
+        </div>
+        
+        <div class="jumbotron">
+            
+            <div class="container">
+                <h1>Séries na Web!</h1>
+                <p>Aqui você pode buscar pelas suas séries favoritas, adicioná-las ao seu perfil e guardar as que você ainda quer ver na sua 
+                    watchlist. Tudo isso e muito mais!
+                </p>
+            </div>
+
+        </div>
+
+        <div class='row' style="margin-bottom: 20px; ">
+            <div class="container">
+                <div class="form-group">
+                    <div class='col-md-3'>
+                        <input class="form-control " type="text" ng-model="serie.title" placeholder="Buscar pelo título...">
+                    </div>
+                    <div class='col-md-3'>
+                        <button class="btn btn-primary  col-md-6" ng-click="searchTitle(serie.title)" ng-disabled="!serie.title">Buscar!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='container'>
+            <div class="col-md-12">
+                <div ng-if="returnDataSerie.length > 0">
+                    <div class="col-sm-6 col-md-4" ng-repeat="serie in returnDataSerie" style="margin-left: -15px; ">
+                        <div class="thumbnail">
+                            
+                            <div class="col-md-12" style="margin-left: 45px; margin-top: 15px; margin-bottom: 15px;"><img ng-src={{serie.Poster}} alt="" height="242px" width="200px"></div>
+
+                            <div class="caption">
+                                <button class="btn btn-info" style="margin-left: 78px;" ng-click="addToMyProfile(serie)">Adicionar no Perfil!</button>
+                            </div>
+                            <div class="caption">
+                                <button class="btn btn-info" style="margin-left: 63px;" ng-click="addToMyWatchList(serie)">Adicionar na Watchlist!</button>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='container'>
+            <div ng-if="seriesProfile.length > 0">
+
+                </hr>
+                <h1>Séries no Perfil!</h1>
+                </hr>
+                    
+                <div class="col-sm-6 col-md-4" ng-repeat="serie in seriesProfile" style="margin-left: 5px;">
+                    
+                    <div class="thumbnail">
+                        
+                        <div class="col-md-12" style="margin-left: 45px; margin-top: 15px; margin-bottom: 15px;" ><img ng-src={{serie.Poster}} alt="" height="242px" width="200px"></div>
+                            
+                            <div class="caption">
+                                
+                                <p>Título:</p>
+                                <h4>{{ serie.Title }}</h4>
+                                
+                                <p>Sinopse:</p>
+                                <p>{{ serie.Plot }}</p>
+                                
+                                <p>Nota no IMDB:</p>
+                                <h4>{{ serie.imdbRating }}</h4>
+                                
+                                <p>Classificação Indicativa:</p>
+                                <h4>{{ serie.Rated }}</h4>
+                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-disabled="checked" placeholder="Insira sua nota para a série..." ng-model="serie.nota">
+                                    <span class="input-group-btn"><button class="btn btn-secondary" ng-click="clickCheck()"
+                                    type="button">Ok!</button></span>
+                                </div>
+                                
+                                <div class="input-group" style="margin-top: 15px;">
+                                    <input type="text" class="form-control" ng-disabled="checked" placeholder="Insira o último episódio visto..." ng-model="serie.episode">
+                                    <span class="input-group-btn"><button ng-click="clickCheck()"
+                                    class="btn btn-secondary" type="button">Ok!</button></span>
+                                </div>
+                            
+                            </button>
+                                
+                        </div>
+                    
+                    </div>
+                    
+                </div>
+            
+            </div>
+        
+        </div>
+
+        <div class='container'>
+            
+            <div ng-if="seriesWatchList.length > 0">
+                
+                </hr>
+                <h1>Séries na Watchlist!</h1>
+                </hr>
+                
+                <div class="col-sm-6 col-md-4" ng-repeat="serie in seriesWatchList" style="margin-left: 5px;">
+                    
+                    <div class="thumbnail">
+                        
+                        <div class="col-md-12" style="margin-left: 45px; margin-top: 15px; margin-bottom: 15px;" ><img ng-src={{serie.Poster}} alt="" height="242px" width="200px"></div>
+                        
+                        <div class="caption">
+                            
+                            <p>Título:</p>
+                            <h4>{{ serie.Title }}</h4>
+                            <button class="btn btn-info" style="margin-left: 78px;" ng-click="addToMyProfile(serie)">Adicionar no Perfil!</button>
+
+                        </div>
+                    
+                    </div>
+                
+                </div>
+                
+            </div>
+        
+        </div>
+    
+    </div>
+
+</body>
+
+</html>
